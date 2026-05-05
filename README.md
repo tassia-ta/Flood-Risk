@@ -2,39 +2,30 @@
 
 ## Project Overview
 
-This independent project analyzes flood-risk zones in Lærdal municipality (kommune **4642**, Vestland) using official, open geospatial datasets from **GeoNorge**. The goal is to identify areas at greatest risk of flooding under different return intervals (**20**, **200**, and **1,000** years), supporting local planning, civil protection, and the future development of alert systems.
+This project analyzes flood-risk vulnerability in Lærdal (municipality 4642, Vestland) - a region with significant historical flood data. Using official geospatial datasets from GeoNorge, I built a reproducible pipeline to identify areas at risk under different return intervals (20, 200, and 1,000 years).
 
 ## Technical Pipeline
 
-**Notebook 1 - Data Collection, Inspection and Preparation**
+**Data Ingestion & Geoprocessing**
 
-* Fetch official municipal boundary from GeoNorge (HTTP → ZIP).
-* Extract vectors and load as a `GeoDataFrame` (GeoPandas).
-* Inspect geometry, reproject (analysis CRS: **EPSG:25832**; web viz: **EPSG:4326**).
-* Export cleaned **boundary lines** and store **bbox/centroid** metadata for reuse.
+* **API Integration:** Automated fetching of municipal boundaries (Administrative Enheter) and flood zones (Flomsoner) via GeoNorge.
+* **Coordinate Transformations:** Precision handling of EPSG:25832 (ETRS89 / UTM zone 32N) for accurate area calculations and EPSG:4326 for web-ready visualization.
+* **Geometry Engineering:** Used shapely for advanced Polygonization of LineString boundaries and geometry validation (fixing self-intersections).
 
-**Notebook 2 - Boundary Polygonization and Flood Clipping**
+**Spatial Analysis & Clipping**
 
-* Load boundary **LineString** geometry and convert to **Polygon** (`shapely.ops.polygonize`).
-* Validate geometry and compute municipality area (km²) in **EPSG:25832**.
-* Query/download Vestland **flomsoner** (flood zones, GML) from GeoNorge.
-* Normalize and reproject layers; **clip** flood zones to the Lærdal polygon.
-* Export clipped layers for mapping and statistics (analysis/web).
+* **Spatial Operations:** Implementation of Clipping and Spatial Joins to isolate Vestland's regional flood data specifically to Lærdal's jurisdiction.
+* **Quantification:** Calculation of affected areas (km²) per flood return interval to support risk-level prioritization.
 
-## Technologies Used
+## Technologies & Skills
 
-**Languages & Libraries:** Python · Pandas · GeoPandas · Shapely · Fiona · Matplotlib · Requests · Pathlib
-**Spatial I/O:** GDAL/OGR (via GeoPandas/Fiona)
-**Data Sources:** Official open datasets from **GeoNorge.no**
-**Workflow:** Jupyter Notebooks · Modular, auditable folder structure · Version-controlled pipeline (Git)
+* **Spatial Libraries:** GeoPandas, Shapely, Fiona, PyProj.
 
-**Methods**
+* **Data Science Stack:** Python, Pandas, NumPy, Matplotlib.
 
-* Download and process official municipal boundaries from GeoNorge.
-* Convert **LineString** geometries to **Polygon** for accurate spatial operations.
-* Load and **clip** the *FlomAreal* flood-zone layer to the Lærdal boundary.
-* Reproject to analysis (**EPSG:25832**) and web visualization (**EPSG:4326**).
-* Explore schema/attributes and prepare artifacts for mapping and statistics.
+* **Geospatial Methodologies:** CRS Transformation, Polygonization, Spatial Clipping, Topology Validation, Bounding Box (BBOX) extraction.
+
+* **Data Sources:** GeoNorge (Kartverket/NVE) APIs & GML/Vector formats.
 
 ---
 
@@ -44,44 +35,21 @@ This independent project analyzes flood-risk zones in Lærdal municipality (komm
 Flood Risk/
 │
 ├── data/
-│   ├── 01_raw/                      # download via Notebook 1 (GeoNorge APIs/ZIP)
-│   └── 02_processed/                # boundary lines, polygon, centroid, bbox, and flood zones 
-│
+│   ├── 01_raw/                      # [Bronze] Original API outputs (ZIP/GML) via GeoNorge
+│   └── 02_processed/                # [Silver Layer] Cleaned polygons & clipped flood zones (EPSG:25832)
 ├── notebooks/
-│   ├── 01_prepare_boundary.ipynb    # Data collection and inspection
-│   └── 02_floodzone_analysis.ipynb  # Boundary polygonization and flood clipping
+│   ├── 01_prepare_boundary.ipynb    # Ingestion & Bronze-to-Silver processing
+│   └── 02_floodzone_analysis.ipynb  # Spatial Analysis & Silver Layer refinement
 │
-├── results/                         # quick-look PNGs, previews for boundary/floodzones
+├── results/                         # [Gold Layer] Mapping artifacts and spatial statistics
 │
-├── LICENSE                          # MIT License
-└── README.md                        # project description and usage guide
+├── LICENSE                          
+└── README.md                        
 ```
 
 ---
 
-## Author
-
-**Tássia Tavares**
-
-**Academic Background**
-
-* PhD in Chemistry with a background in environmental chemistry, biochemistry, and biotechnology.
-
-**Professional Strengths**
-
-* Specialist in **interdisciplinary projects**.
-* Experienced with **complex datasets, statistical analysis, and ML-ready pipelines**.
-
-**Data Science**
-
-* Certified in **Python for Data Science, AI and Development (IBM)**.
-* Delivers end-to-end, reproducible data products from ingestion and QA to feature engineering, modeling, and decision ready reporting applied to complex, real-world, science driven problems.
-
-[![LinkedIn](https://img.shields.io/badge/Connect-LinkedIn-blue.svg?logo=linkedin)](https://www.linkedin.com/in/tassia-/)
-
----
-
-## Navigation Links
+## Quick Navigation 
 
 * [Notebook 1 – Data Collection, Inspection and Preparation](../notebooks/01_prepare_boundary.ipynb)
 * [Notebook 2 – Boundary Polygonization and Flood Clipping](../notebooks/02_floodzone_analysis.ipynb)
