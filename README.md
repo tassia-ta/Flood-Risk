@@ -51,8 +51,8 @@ Flood Risk/
 
 ## Quick Navigation 
 
-* [Notebook 1 – Data Collection, Inspection and Preparation](../notebooks/01_prepare_boundary.ipynb)
-* [Notebook 2 – Boundary Polygonization and Flood Clipping](../notebooks/02_floodzone_analysis.ipynb)
+* [Notebook 1 – Data Collection, Inspection and Preparation](notebooks/01_prepare_boundary.ipynb)
+* [Notebook 2 – Boundary Polygonization and Flood Clipping](notebooks/02_floodzone_analysis.ipynb)
 
 ---
 
