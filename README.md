@@ -35,13 +35,13 @@ This project analyzes flood-risk vulnerability in Lærdal (municipality 4642, Ve
 Flood Risk/
 │
 ├── data/
-│   ├── 01_raw/                      # [Bronze] Original API outputs (ZIP/GML) via GeoNorge
-│   └── 02_processed/                # [Silver Layer] Cleaned polygons & clipped flood zones (EPSG:25832)
+│   ├── 01_raw/                      # Original API outputs (ZIP/GML) via GeoNorge
+│   └── 02_processed/                # Cleaned polygons & clipped flood zones (EPSG:25832)
 ├── notebooks/
-│   ├── 01_prepare_boundary.ipynb    # Ingestion & Bronze-to-Silver processing
-│   └── 02_floodzone_analysis.ipynb  # Spatial Analysis & Silver Layer refinement
+│   ├── 01_prepare_boundary.ipynb    # Ingestion & processing
+│   └── 02_floodzone_analysis.ipynb  # Spatial Analysis 
 │
-├── results/                         # [Gold Layer] Mapping artifacts and spatial statistics
+├── results/                         # Mapping artifacts and spatial statistics
 │
 ├── LICENSE                          
 └── README.md                        
